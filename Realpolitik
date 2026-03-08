@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Victoria Wilson Virtual Assistant & Cold Caller</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–teal:     #028090;
+–seafoam:  #00A896;
+–mint:     #02C39A;
+–dark:     #0D2B2F;
+–darker:   #071a1d;
+–offwhite: #F0FAFA;
+–gray:     #64748B;
+–light:    #E2F4F5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–darker);
+color: var(–offwhite);
+overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+display: flex; align-items: center; justify-content: space-between;
+padding: 1.2rem 4rem;
+background: rgba(7,26,29,0.85);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(2,192,154,0.15);
+}
+.nav-logo {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.4rem; font-weight: 600; letter-spacing: 0.05em;
+color: var(–mint);
+text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+text-decoration: none; color: rgba(240,250,250,0.7);
+font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+transition: color 0.3s;
+}
+.nav-links a:hover { color: var(–mint); }
+
+/* ── HERO ── */
+#hero {
+min-height: 100vh;
+display: flex; align-items: center;
+padding: 8rem 4rem 4rem;
+position: relative; overflow: hidden;
+}
+.hero-bg {
+position: absolute; inset: 0; z-index: 0;
+background: radial-gradient(ellipse 80% 70% at 70% 50%, rgba(2,128,144,0.18) 0%, transparent 70%),
+radial-gradient(ellipse 40% 40% at 20% 80%, rgba(2,195,154,0.1) 0%, transparent 60%);
+}
+.hero-line {
+position: absolute; left: 0; top: 0; bottom: 0;
+width: 5px; background: linear-gradient(to bottom, var(–mint), var(–teal));
+}
+.hero-content { position: relative; z-index: 1; max-width: 700px; }
+.hero-eyebrow {
+font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+color: var(–mint); margin-bottom: 1.2rem;
+opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(3.5rem, 8vw, 6.5rem);
+font-weight: 300; line-height: 1.0;
+color: var(–offwhite); margin-bottom: 1.5rem;
+opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero-name span { color: var(–mint); font-style: italic; }
+.hero-desc {
+font-size: 1.05rem; line-height: 1.75; color: rgba(240,250,250,0.72);
+max-width: 540px; margin-bottom: 2.5rem;
+opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-tags {
+display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem;
+opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+}
+.tag {
+padding: 0.4rem 1rem; border: 1px solid rgba(2,195,154,0.4);
+border-radius: 2rem; font-size: 0.8rem; color: var(–mint);
+letter-spacing: 0.05em;
+}
+.hero-cta {
+display: inline-flex; align-items: center; gap: 0.6rem;
+background: var(–mint); color: var(–darker);
+padding: 0.85rem 2rem; border-radius: 0.25rem;
+font-weight: 600; font-size: 0.9rem; text-decoration: none;
+letter-spacing: 0.05em; text-transform: uppercase;
+transition: background 0.3s, transform 0.2s;
+opacity: 0; animation: fadeUp 0.8s 0.85s forwards;
+}
+.hero-cta:hover { background: var(–seafoam); transform: translateY(-2px); }
+
+/* ── SECTIONS ── */
+section { padding: 7rem 4rem; }
+.section-label {
+font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+color: var(–mint); margin-bottom: 0.6rem;
+}
+.section-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
+color: var(–offwhite); margin-bottom: 3rem; line-height: 1.2;
+}
+.section-title em { font-style: italic; color: var(–mint); }
+
+/* ── ABOUT ── */
+#about { background: var(–dark); }
+.about-grid {
+display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem;
+align-items: start;
+}
+.about-card {
+background: rgba(2,128,144,0.08);
+border: 1px solid rgba(2,195,154,0.2);
+border-radius: 0.5rem; padding: 2.5rem; text-align: center;
+}
+.avatar {
+width: 110px; height: 110px; border-radius: 50%;
+background: linear-gradient(135deg, var(–seafoam), var(–teal));
+display: flex; align-items: center; justify-content: center;
+font-size: 3rem; margin: 0 auto 1.5rem;
+border: 3px solid rgba(2,195,154,0.4);
+}
+.about-card h3 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.4rem; font-weight: 600; color: var(–offwhite);
+margin-bottom: 0.3rem;
+}
+.about-card .subtitle { font-size: 0.85rem; color: var(–mint); margin-bottom: 1.5rem; }
+.contact-item {
+display: flex; align-items: center; gap: 0.6rem;
+font-size: 0.88rem; color: rgba(240,250,250,0.65);
+margin-bottom: 0.6rem; justify-content: center;
+}
+.about-bio p {
+font-size: 1rem; line-height: 1.85; color: rgba(240,250,250,0.75);
+margin-bottom: 1.4rem;
+}
+.about-bio p strong { color: var(–mint); font-weight: 500; }
+
+/* ── SKILLS ── */
+#skills { background: var(–darker); }
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.skill-card {
+background: rgba(2,128,144,0.07);
+border: 1px solid rgba(2,195,154,0.18);
+border-top: 3px solid var(–mint);
+border-radius: 0.4rem; padding: 2rem;
+transition: transform 0.3s, border-color 0.3s, background 0.3s;
+}
+.skill-card:hover {
+transform: translateY(-5px);
+background: rgba(2,128,144,0.14);
+border-color: var(–mint);
+}
+.skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+.skill-card h3 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.25rem; font-weight: 600; color: var(–mint);
+margin-bottom: 1.2rem;
+}
+.skill-card ul { list-style: none; }
+.skill-card li {
+font-size: 0.88rem; color: rgba(240,250,250,0.72);
+padding: 0.35rem 0; border-bottom: 1px solid rgba(2,195,154,0.08);
+display: flex; align-items: center; gap: 0.5rem;
+}
+.skill-card li::before { content: ‘→’; color: var(–mint); font-size: 0.75rem; }
+.skill-card li:last-child { border-bottom: none; }
+
+/* ── EXPERIENCE ── */
+#experience { background: var(–dark); }
+.exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.exp-card {
+display: grid; grid-template-columns: 3fr 2fr;
+background: rgba(2,128,144,0.07);
+border: 1px solid rgba(2,195,154,0.15);
+border-left: 4px solid var(–teal);
+border-radius: 0.4rem; padding: 2rem 2rem 2rem 2.2rem;
+transition: border-color 0.3s, background 0.3s;
+}
+.exp-card:nth-child(2) { border-left-color: var(–seafoam); }
+.exp-card:nth-child(3) { border-left-color: var(–mint); }
+.exp-card:hover { background: rgba(2,128,144,0.12); border-color: var(–mint); }
+.exp-left h3 {
+font-size: 1.05rem; font-weight: 600; color: var(–offwhite); margin-bottom: 0.3rem;
+}
+.exp-left .company {
+font-size: 0.83rem; color: var(–mint); font-style: italic; margin-bottom: 0;
+}
+.exp-right ul { list-style: none; }
+.exp-right li {
+font-size: 0.875rem; color: rgba(240,250,250,0.72);
+padding: 0.28rem 0; display: flex; gap: 0.5rem; align-items: flex-start;
+}
+.exp-right li::before { content: ‘✦’; color: var(–mint); font-size: 0.6rem; margin-top: 0.35rem; flex-shrink: 0; }
+
+/* ── WHY ME ── */
+#why { background: var(–darker); }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.why-card {
+background: rgba(2,128,144,0.07);
+border: 1px solid rgba(2,195,154,0.15);
+border-radius: 0.4rem; padding: 2rem;
+display: flex; gap: 1.2rem; align-items: flex-start;
+transition: transform 0.3s, background 0.3s;
+}
+.why-card:hover { transform: translateY(-4px); background: rgba(2,128,144,0.13); }
+.why-icon {
+font-size: 1.8rem; flex-shrink: 0;
+width: 52px; height: 52px;
+background: rgba(2,195,154,0.12);
+border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.why-card h3 {
+font-size: 1rem; font-weight: 600; color: var(–mint); margin-bottom: 0.5rem;
+}
+.why-card p { font-size: 0.88rem; color: rgba(240,250,250,0.68); line-height: 1.65; }
+
+/* ── CONTACT ── */
+#contact {
+background: var(–dark);
+text-align: center;
+}
+.contact-tagline {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300;
+color: var(–offwhite); margin-bottom: 1rem; font-style: italic;
+}
+.contact-sub {
+font-size: 1rem; color: rgba(240,250,250,0.6); margin-bottom: 3.5rem;
+}
+.contact-cards {
+display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+margin-bottom: 3.5rem;
+}
+.contact-card {
+background: rgba(2,128,144,0.1);
+border: 1px solid rgba(2,195,154,0.25);
+border-radius: 0.4rem; padding: 1.8rem 2.2rem;
+min-width: 200px; transition: transform 0.3s, background 0.3s;
+}
+.contact-card:hover { transform: translateY(-4px); background: rgba(2,128,144,0.18); }
+.contact-card .c-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.contact-card .c-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(–mint); margin-bottom: 0.4rem; }
+.contact-card .c-value { font-size: 0.95rem; color: var(–offwhite); }
+.cta-btn {
+display: inline-flex; align-items: center; gap: 0.6rem;
+background: transparent; color: var(–mint);
+padding: 0.9rem 2.5rem; border-radius: 0.25rem;
+border: 1.5px solid var(–mint);
+font-weight: 500; font-size: 0.9rem; text-decoration: none;
+letter-spacing: 0.08em; text-transform: uppercase;
+transition: background 0.3s, color 0.3s;
+}
+.cta-btn:hover { background: var(–mint); color: var(–darker); }
+
+/* ── FOOTER ── */
+footer {
+padding: 2rem 4rem; text-align: center;
+border-top: 1px solid rgba(2,195,154,0.1);
+font-size: 0.8rem; color: rgba(240,250,250,0.3);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+opacity: 0; transform: translateY(30px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+nav { padding: 1rem 2rem; }
+.nav-links { gap: 1.5rem; }
+section { padding: 5rem 2rem; }
+#hero { padding: 7rem 2rem 4rem; }
+.about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+.skills-grid { grid-template-columns: 1fr; }
+.exp-card { grid-template-columns: 1fr; gap: 1.2rem; }
+.why-grid { grid-template-columns: 1fr; }
+.contact-cards { flex-direction: column; align-items: center; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <a class="nav-logo" href="#hero">VW</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Professional Portfolio</p>
+    <h1 class="hero-name">Victoria<br/><span>Wilson</span></h1>
+    <p class="hero-desc">I Book Meetings So You Don't Have To, helping busy business owners and sales teams stop chasing leads and start closing them.</p>
+    <div class="hero-tags">
+      <span class="tag">Virtual Assistant</span>
+      <span class="tag">Cold Caller</span>
+      <span class="tag">Appointment Setter</span>
+      <span class="tag">Lead Generation</span>
+    </div>
+    <a class="hero-cta" href="#contact">📞 Let's Work Together</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+  <div class="reveal">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Who I <em>Am</em></h2>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-card">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAMigAwAEAAAAAQAAAMgAAAAA/8AAEQgAyADIAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAAQEBAQEBAgEBAgMCAgIDBQMDAwMFBgUFBQUFBgcGBgYGBgYHBwcHBwcHBwgICAgICAoKCgoKCwsLCwsLCwsLC//bAEMBAgICAwMDBQMDBQwIBggMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/dAAQADf/aAAwDAQACEQMRAD8A8ETpT6KkjXc1c5oOhjdmFaUce393/FT4o/Lp7fKvyVXKZSlcYjbW/wBr0rVhXotVoYdy7+9aSr8o96mUjanGyJFXHJp9FFAgqlqGoWGk2M2palMkFvbozyySHAVV+8zNV2vyr/b6+Nl4+pQ/B/w9OUhhVZ9R8s8sz/NHF/3z8233H92pqStE0p0+eXKM+O37dGq3E1xonwlf7HYxsyNqLqrSSf8AXNW+VV/3vm/3a/Na8+NHxL8ceOhps2raof3Us8srzz79sSNJt+9/s15l4b1Txn8YvHq/D3wNGPlfY8o6D+9/wGv2F/Z9/wCCaGqx3D63fzSXM8lu9uzY42Sqyt/6FXk47HQoaTl7x9DluVzxHvU4+73Py30HxZda9Mz6lEHkmbczlVJNfVnhH4xfFf4YWiX/AIP1mR0h+ZrC5JmgZf7u1m3R/wC8rLXqPx0/4JozfDyGfW/Dl/c2NzH8yelfB+i+Ntba4vPCXidAmpab8jOBwyf39v8A6GvvRhcZSrfw5bBjcvrYf+NH3Wfux+zj+0/4V/aA0GX7Mn9n63YrtvdPkOSp/vxt/FH/ALX/AH1X02uJNuxq/kv8N/G/xD8I/ixZ/ELwdL5NzYz/ADxMeJE/5aRSf3lb/Cv6iPhT8SvD3xX8B6X4/wDDEm+z1KBZVB6qf4kb/aVsrXqU5XieDUjyS909Fmj+X56z14bZWnM+V2VQaPGK2iYVI3IpV3LWfIuVq/HyxSmSR/8A6qipGXxGUdDHoqeZf46gpRleJqZt0u7dWUy44NdDLEhWsGVdr1Uf5RVPh5jhvGi7fC+qf9esv/oDV8KV96+NV3eFdTP/AE6y/wDoDV8JeX7UII7H/9Dwer8Efyh6ojqK1Lfb5f3qw3KqFleFp8cYLUlT2q7k3v8Aep7ERjcuQq6/u6uKMDFRJ96pqk3kFFFFBJzfjDxRpXgnwvf+KtYfZbWMDTuf91a/md8ffEG/8UeOtY8W6w/+k3jvO3PRm3Nt/wCA7a/UH/goV8bE0m1tfhRYS7RIi3l4AevzfuU/76Xd+Ar8KPH2uzQ2Tuj/AL2RXdv+BfLXFUlzz5Ynp4enyQ5z9U/+CUvwLvdVb/hYurQHy7qZliOP9r5mr+xj4V6N4S8I6DClykYZkX61/Gx+y78aP2dfh/4B0TwJ8S7zUE1WOyV3a3890t1b+7DB/F83zs26v0s/ZL+LcniDxUNe+FOu3eu+HpLpLWWW781JI1lbbG/lzNu8ttp/eL6Gvjsyo1nOeIf5H3+WypKlDDQkvv1+4/Tb9trXvg+uivHr2t2WnSbfljkb52/3V+9X8sn7UGg+CdNY/Ezwqs5eFtjzSW7xpKjfKyqzLtav1f8A2hvhj4v174reJ9e1ux/tl9BvFsrC3MnlxySszbnlm/5ZQqqnfJ9PvMyq35Nal8QP2jfj94wt/A1hpMWlaZqk8trLZb5XjhRfl3Sbl+638H/stGX4d8v1m+2+pOZVof7tLrtoflT4gmaTWpZkO7d8yn1/2q/Vr/gm7+0wngnXh8KPEk3/ABKtalXyC54huG+Vf+Ay/d/3sf3q/Nv4yfDfWPhH491DwBrf/Hxp8rLFJ2ZP4WWuJ8M69JpuqQzQuYX3LyOzbvvLX2kZc0IzgfA1KLhOVOZ/arAxkG/rSP17188fsrfFN/i78D9E8Y3j77xovs95/wBdYvlZv+Bbd3419Dy/dGW+WumOp5so/ZkUx9+nv92iT5W3pSlQ1amMjMmG7mqzLtq+w+b61TmbLYrmjpLliaRkV3XcKw7pPLkrerHvF71r9oqXwnEeNP8AkUdU/wCvWX/0Bq+Dq+8vGW//AIRPUv8Ar1l/9Aavhf5venykU9j/0fCFwxxWvDHtQVmw/erZX7v7usIhMPvP5daMY6Cs1f8AWVsRqT+NEjWnsWFXbTqKKQgrP1HULbTbOW8vHEccKM7ufuhV/irQr4R/be+Mnhjwb8MrzwNqU+y58QRNaqiNhwr/AHm+X5v/ANdRKVo8xVOPPKx+HX7RnxfvPjF8dvEfjO2cyab9oMFngMAYovljb/gW3d+NfJfiTWob7WrewD7/ADJU3n/gVezXvw/e6322mzT21mvdzz/wLbXinifwp9ghFzp3EccpzIT/AHPvN/30awo2b5jvqc8I8p/YX8If2K/g58avAmka26CwvF0/7BPJbfIZoWVVkSXb/rFbaPlb0FfWNv8As+fDr4D6Pofwx+GOnol1cTIzyHbv2q3y7m+6q1+Vv/BO79sDPhXTYbqYSboFRzn+Nflb/wAeBr7m/as8P/DT40N4f17xD4kvdNvLeT5I7O4aPzvN+6jLu+bpX53i6dZv2M5vlP1Sj7FSWIoxWqO/8R+ONB+Gf7SGteHvG11p81rql15U4inilHzL/ss+6vS/iN4T+DPwp8Pz+IfCdhYQ+cm9XijVCf8Avmvxe8SfDP8AZX+EPxEs/iF4hv8AUNYvdPuFla8u5vkR1+ZVVV+8v+1XqP7Q37RVh4z8Kxar4PnR7CaLKGI8Gsvq6p8sY3sa08RzSvP4j8T/APgo1r1h4k+Ilv4jtERZmZonx3Wvh5vCfiH7CmpfZZWgb7rou8V7J+0jql1qNwl3dvl5Jdy17r8A7a8tPhppPjWeYXFheapNpTRt/C8UUUy/8CZZXX/gJr77A1PZ4SEj85zOXt8fM+y/+CUvxohtbfV/gbrzFLlpft9mZONy7VWRf+A7Q34mv2tjYj8K/mH+IHxAh+H3j6y8bfDpxpuq6fLuGF/dk/xK0f3l/wB1q/dz9lX49f8AC/Ph3F4kvEijvYVVbhIjwG/9l+7/ALXavQo1r+6eHiqPs5c0T6flf8feoVkVmoP3vn+7T/KUdq6TilK5C8dZsy7XrWk/uVQmXHX+GsZcqkKmUqyr7pWrWbe/6sVRscN4yG7wnqn/AF5y/wDoDV8HeX/n/Jr7y8Y/8ipqn/XpL/6A1fCNBzn/0vDYV3NWunSsuF9orSjb939KwjH7RNQkXKyb60Yz0NZp5wAKvx549KcjWlsX4+9SVGNlKzY4FSakE03l1/NP+2p8QrPUv2pNamubkTJpu2ziLHKRKq7pP+BbmNf0n3io0Lx8fNX8xnxm/ZR8S2Pxy8Qv4qm+z6at1LcNeScAozMy/wDAnrnxEo21N8LGTn7vxHid58QrDXrd9N0qb7NbwqXluH61P8R59LT9lHw3e6VEI5tc8S6hHOP4xDY29r9mX/gUlzcM/wDe4/u1z2pfBPWPAum3Ot684+yw7thByJPmXy2X/eVqpfD+zufiZ4fuPhRD+8vbWd9S02PKqZXZFWeJf7zMqIyL/FtP96sbwhyyj8KOuUZylyP4meq/sWfFiz8LanN4T1STyzv8+1LHr/eT+TfnX7NW+j2XjzUNH+J1tZP4hvNHf/kHSyuI5E/2VVl+avxB/ZI/Zy+Ivxx+P+leA/DEM+mvO8qT3DIwMaeU3nbd38Xl7/yr7++D/wAcvHXwX1JIbxGc2bsrgLnDL975f+A189m+H/fe0w/xPc+pyHGWw8aOI+FbH3P8VtW8c/FXwxN4Y+GPwD0/wkkjbp9UvYvtDhfusqtMz7V/3f8Ax2vg/wCN2tHwL4atfCU3lwtaxLEyRhUB/wCAr8tfQPxR/wCCqesXuky6ak8kW5duzawFfjz8RPiR4k+M3iKW5tvMdZG+Z37f7q1x4XC1q8vfVondjsfSpLSd5nkHxF1/TfFP2l2Z/tcNxEluP4CjCXzmb/a3eX+td5oWualoXwXtvCtvK6Pfa/8Ab41zjAggaPft/wBppdv4Gvrfwl+yjoN9+xF8Q/2hPEMOH0G/tLWwkJwS/wDy1RW/2lmT/gQFfAd34wfVZYRbWwtreFVSKMHO1V/2v4mdmLP/ALR/4DX1lPlnSUIfCj4qpGUaspz+Jnpvxu8M+Kra+t9e1VDLFcKu2f1/2Wr72/4JO+JPEK/ETV/DdsZPsMlv5s6np/st/wAB+7/wM18o6N+0Rok3hX/hDPHOlm9RbhZUA4O1V+7+tfrF+wTp/wALvCfhe48W6VLbWd3rDY8t5F8wIrN8v+zV06jXKpRJxFGLjKUJXP1JorOt9RtrqPfEQR6ir+9a7oyueFKNiN/vVnTNtq/I+GrNlKM3yVnLWRcCGqF1Gdu/bV+qF4/7viqNDh/Fv/Iq6p/15y/+gNXwtX3R4u+Twnqn/XnL/wCgNXwn5n+f8iq0Oc//0/Coxlq2x8vyVixNtatpWRlV6wiEx1XY22qtUqajbQKqQoysavmN/n/9VVp7pIVLyHFVmm9Wryv44a1f+H/g/wCJte0on7RZ6bcTIR2ZYmbdWctI8xvGV5csTwTxR+3D8K9F1y50GwEl7Nbv5TSDaE3/AOz/AHq/LL9tz44eKvidfJYaPDizVt7BI2H8Py7mb73/AHzXy1ZfEbSNI0MPMD5u/e5Q4z/vbfmZv/HaxLr9oXxVfxjR9EtILSCRvlwis7/7TN/DXmfvqj/unuRjh6UP7xwGta5451fwvF4VvGleFflUEV5FfadqVjJsdTC6/Nt7ivtvwdLqWpW4vNbQJDN8qFBh5W/i3N/dre0X9lHx58ZPihpfgD4XaZLqup646rBBGMAf7Tf3V/2mraOI9l8RlLDyq+9E/eH/AINuP2arn4sP4z/aQ8a3Vzqd3psTaDYG5d5PKRlSSTy93975F/D/AGq/Or4raS/g/wCPXxB+G+pWxL6P4hvbfOOCnnsy/wDjrCv7nf8Aglj+wLZ/sGfsq6V8Lr9o7jXbjde6tLH0NxL95Vb+6qqF/Cv5wf2uP2dbC2/bi+KmtxMEiuNXS48s/wDTW3ikb/x5jXg4jER55TPocBhZT5aR/Px40+HelateEwwEbm6fNU3hv4Z39uy6VoNgct95yOlftbH8JfAzL9qmhi85e+K+k/2Vf2Y/D3xi+PnhjwNbQAwXF6kt4AOsMH7ybd/wFCv41j9e+yer/Y/J78jzT/gpB+xz4h/Zp/4Iq+D/AAfZwkXsl7a6xrxC877pmkZW/wCuTMkf/ARX8nfw/wDCz3V8Hlt/Oh/iHYf7392v9W39vj9nXR/2lv2YfFvwZmiG7UtOligwM7ZVXdGy/wDAsV/m0a78GfEPwJ+ImoeD/EkPk6jpMu2UFcCWLdt+7Xfg8VaMoHzOIw/tJqp2Oa1i1+GOi6Mj3+jSSzQ7T1w6/wC0rfxL/wB9f8Bret/2iPBPh3w75PgywG9eGEnEkf8A7Ky/7X/jtenXGh6PJavbakEETJuQnsvy/L/48Vr5b8VfAS8sdeN9oJ82xkfcuD/AzN/8TXTywfxE+0rL4D9Q/wDgm98bofjP8Wh8MfFmqy6e10ytAR86FP8Alp8rfxL97bu27Qf+Bfu18dvgTf8AwL1q20ebUotUiuE3LLGuwhv7rL89fzN/sO/BXWND/aJ8Lf2NcD7fNqSxKiHnyvm8zd/s+Wxav7b/AIofAmw8dfCnWPG3iK7S31GRPOgmlPyLt+6u7/b+7+NZU8Y6dbkjL3TLFYH2lHnlH3z8dpetUGX/AJaZ+anzS5aq1e1HmcuY+cjGwVnXvH8VaB6GsW8bJFax+IqXwnH+MDt8I6nj/n1l/wDQGr4U3tX3T4yb/ik9UT/p1l/9AavhLYtaHMf/1PB60rV9y/7VZtXLd8KI65uaxUjS5K+lDMfuUDK/xUb1rUxI/J/2jX014B+Dnh74mfsm/GmaSEz63/wj1xZWG4ZCtLA+5l/2mZUX/ZU/7VfNO3cwRK/oc+Bfw38JfAz9mfTrbxy9paG6t2vdSkuWWPDTr8yybvvKq4j2+1edmVTkpcsT08sp89aMpdD/ADHI/wBnPxnqFvLczW5jSPaXD9h/FXqtx8D/AA38P995rFzGQ25eD/n1r7C/4KJaJc+F/wBo7XPB/wAAdUTXtHad3tH04+Ynky7W2sy/LtXld1flr4wl8c32oPps0stz5LMrEHOWrio1p1I/Ee5WpUqUpe6feHwn0XR/jVrWl+C/CqokjXUNhFnoPNdV3N/s1/oF/sC/8E3vhL+x74bTUUthqXii6Rftmozqu/P9yP8Auqv92v8APH/4Je2OvW/7cPw80fbvt77WYUnjPORu3N/wL5TX+rD4fme/0q1uZeZGTa5/21+Vv/Hq5MT8dvsm+HqXhzcpqtb5haPHG2v4zP8AgoxNqun/ALd3j6wsG2JI1k+B/wBesVf2hOuIzX8Yf/BSq/hsf+CgXjhH/u2S/wDkrFXm4rWB7GS/7x7x8YNZ+II/3287fSv3d/4Ir/Cu/vPFXi34zawhMOm26aXak9PNnbzJWX/cVE/76r8hZriyj0VLnj5l+Wv6l/8AgnH8P0+G/wCxx4dmli2XXiJn1eXjk+e37r/yCsdcWFo+/wA0j2s3xlsPyR6n2ZcRfbJDv5Ffxpf8F9v2edB+F/xM0/4y6bCltBr0EsU4H9+Lbu/mG/Ov7RbGz8yMv/er+UT/AIOT9Uv/ABl4U0Twr4es5Liw0OVk1G7T7kc10qtHF/vLGnmP/vJ/er04fGj5WnK0ZRP4qPid8XtY17UFttHcpZwosS477a6rwL8R/iRdQp4S02CS5mvHXYArEsv8Kr/wKvRfht8A0nuJv+EiQC227lk7H+61fQi+NPhv8Cr+x1XSoUnubOVZUwVzG6t8rbv4f+BV69SouXkirnDRjO/PN2P0d/4JM/CnwT8NvixL8ZvjldXr3lrF5X2Y27h45ZWbciq38TLhd38K5r+rvWPFnw6+Leh/2beXlvey+V+60izZpI7dW/im2/ek/wB77tfzu/8ABOX4/fCj9qC6udH8TzXNlr8e+VUjPkXDJu+ZoJl+barN86r83975dq1/Qh8AdFtvArXXgy2WOSOaJriG5VFR5l3KrNMq/L5i7hvZfvZFeFKUuf3j1KkYcmh+L/xT8Cy/Djx3f+FZs7Ld90RPdG+Za85r9A/27PC6R67pvjC1GfO32ruOh2/Mv/oRr8+nbaK+vwtb2lKMj4vFU/Z1ZIhkk8tDnmsORvMY1cuJRt/d1n11R7nJUl9k5Pxs+PCuqf8AXrL/AOgNXwh5i/5//VX3T4ybHhXUv+vOX/0Bq+FfM/z/AJFSion/1fB6ejbTmmUVzmhfjm3VZTZWUrbauLIWoM5RPbPgL4Jm+Inxj8PeFUj81Li8R5x/0yi/eSf+Og19b/tiaL8P9V+Db/tM/taeKry30nUN0thpVg2wWtvu+VI/4muG4XarRruPzLJtZq9C/wCCXPw5h1TxVr3xF1KHclrAtlau399trSbf+AqPzr8v/wDg5I0XxN8NPBngGbSml/4RmbVNQumt8fu47pkWRV/3WbzG2/WvEzKXtKqgfRZTT9nSlOR+I37Qv7cHwx8WPN4M+C3hO08K+H4dysQzSXVx/tXM7fM3+7/er5x8F69pus3UiaxaRxG4T5UQdEr834r69k1QTXWX+dpX96/p2/4Iz/8ABPeH9sqebxz4ql2aJps6xXATrM33mTd/drOtRhh4aHbh8VOvOz6H0n/wQd/4J3+IfHX7Sf8Aw1R4q094PDfh1X/ssyqw82Zvl3ru/hVc/N71/cDY2v2Gd7XoG/er/wCgt/T864/4S/DPwf8ACfwfY+DPBdrHZ2FnEqJHGNvy13+oMkCi5/54tub/AHf4q4Ja+9I2lL7MS1X8Wf8AwVl0uax/bk8baqn8S2TL/wCAsVf2hfasLxX8i/8AwWqt7DR/2ltW177n2jSbWc+7Lvj/APZBXPivhPTyqX775H5+/BmPVPjB4r8O/DfR8tc6leRWC47NPL5a/wDoVf3aaT4f03wzo+n+EtETyrHS7eK1gQdkiVVVf++Vr+NL/ggb4NT4zfH648f6kmbbwrPNqXPQ7VWGDb/20O7/AIDX9oVjIlwfOk/3mojTs5InHYj2nIkc98QfFb+B/Cc2pWkIub+Zlt7K3z/rZpfljX/d/idv4VBb+Gvz6/ai/ZB0L4ufs0al8H9eP2vUtS33k96w+drtm8xpf9n5vuL/AArhf4a+1dPm/wCE68aXPjCb5tN0Nns9OHZpvuzz/wDAf9Sn0f8AhatvXokvJUR+aqUrnBGXIf52X7WH7N3xd/ZO8M3mm+LbCWKHcyLcBf3bf7St/Du/2q/BnXvEGq3mov50xKNu25Pb+7X+rV+2h8Cfhj8fvh/N8PfGFjFNDJEyuSqsR8tf5kv7SnwEf4c/tH+JfhF4eQzjT9Ueztwnzbvm+X/x3FepluIjzSUzmzCm5KM4H6C/8EYLjV779pDQ0eOU2GlzvevKis5CtFJGyLt/567k/Kv7q/B/hCZ5G8b+IRLpmnrB5UUb8Oysys3y/wC1tHy+1fK//BIf/gm38Pf2Tf2bdJ17xPZwSeKtQt0vNRurgLiN2Xds/wCA/d21+qc1nYatN9t0qxk1V1+5cTjy4F/3d1ediJe0qylE7KceSlGH2j8u/wBsDQ38WeAZXtrX7HBZoXs4j99tu1mZv+ArX42ySZLIn86/eT9p7xzonhnR7nTbCOLVtbvEeBEt9zRwrt2szN/s7q/BLU7a60+9ks7lSkkbYYHtXuZTK8ZQPns0jZxmU5G4+frUTHaKWqlw22vZPF3kcl4ubd4V1Mf9Osv/AKA1fDnlr/n/APXX3J4u/wCRW1P/AK9Zf/QGr4erM1P/1vB6KrQygrk1ZrnNZBVmF8tVatDS7G81LUrfTbCIzT3DrFFGgyWZm2qtKQj+nX9in4SQ/Cn4B6FFdATf21AmqXEifwyzqrbf+ArsX8K8f/4KbfsS6V+2p+zrqXw0mcC8h/0rTpyM7Zl/1bf+yv8A7JNfbHwv8L6x4B8A6T4e0uYXNvY2UNv5Uh/uoq/K1cT8XvixbfDzQZ9b1KxkjhjVlfPQf7W3/wCyr5TEVJNykfW4WnZRij/MN+MH7K8Pw18Zp4M1gHT9ajbCwTjHmBv7rfnsav6yv+DcnxZ4G8L+BfFXwotNQgmvrW8W88nOH2Srt/8AQgVr8sP+CqPj74Y/FXxBpWseHtGuJLrQWm3XO3yzK0u77zfdWNWbd95q+bv+CMs3jXwx+1ZbePLNriDTlWWC4kXcEJ3L8u7+L5fm2/Sq9pKpSvKWx1SoxjPl5dz/AEg4daQD+61VrjXodvz/ADBvvZr5X0X4mJNYpK75Zl9a7PQ/GVnq0hs5jy33a5PaSJ9meu6Pr6XlvLZowMtqfKP+7/C3/fP9a/kv/wCDhTQ/FviD47eBvCvhWWK0bxRpc0Et3Pu8uJbV90jSbVZvuyj+DuK/pZ8Qa1/wgPiay8QuS1hfMtneHsu5v3L/APAW+X/gVfjN/wAF0vCaN8LfCfxUQZfRdW+yyn/pldJ/8ciT86mMjWnGSkTf8EV/g3pvwvtPFniTSkENsuk6Zpagc5eLz2kb/e5Sv3I8feLrnQdBttB0qTy9T16f7HbsOse5WaSX/tlGrt/vAL/FX5a/8EiLeW5/ZYfxVef8xjVppVPrFAqQr/48r19G/CXxXqvx5+Pnifx4j48K+D9+h6fJ2luFbddyr/wICP8A7Zn+9URk7c0viKqW55cp9vWM+m+HtCg0TSgEtrWJYokz/Clczrnia2tGabPzKleT6948s0vJbSwcERttzmvD/HPxGT54Uf5mXb1p8xnGnc5n9qL46aP8KfhvqfjnxJcCGGO3lncuf4FXdX8PP7OfjLwB+0F/wUA0zxP4qnjt7GbWm1S/uJRkbt7SbVVV3N90Ki/3jX9Jf7ed5L8RPhvrPhK8lMkF1btE2D0X/Z/KvwK/ZY/Zd+Nnhfxxc/ET4P38FnDp9w0TSqFSfYu1m2/c3fe2/eXpWmHrLlf8xrKi+Zfyn97Hwj+IHg/xpptqmm2d7eQW8S/ZYpYJYYB/dZmkVNzV6L440i58QW5h1u8keP8AhtLQ7EH+81fj/wDsj/Ej9oTxFZ28Pi3Vbz7DbusUs93PEI9zfKqstpG8q7v+mjV+uVjrztbyaJczLNJD8jywKyx7tv3dzNub/erGnImtR973T44+LGn+G/C9nvksoktreDc47nczf/E1+F3xut9S/wCFgXOsala/Y/7URLyKIdkZdq/+g1+yv7TXxZ8B/DjS08T+Oba4msGZVWJSoeX/AGVVq/Hn4+/HLSvj342Txpoum/2VYx2qWtvATuOxd3zN+de3lMpc54ObRjycp4hLJ5YzVORvMb52ombc1Q8mvoDwIxOe8XNt8J6n/wBesv8A6A1fDPmfSvt3xmdvhTUz/wBOsv8A6A1fCnmf5/yKEaSP/9f5zt5tq+WPlWrnnbl61hrKy1cjm3VjKJpGpc1U6V9Rfsg+L/APgX45aZ4n8f2Euopb7lsoo9v/AB9NtWNm/wB3nZ/tYr5UWRQOten/AAYki/4W14WE3Kf2ta7v+/q1hWjeEkb0/cnGR/Vd8OfiA/i7SfO0y1ktkjX5kn6r8tfP37S3gu/8caa+jvNrou7rdFax6ZcvGC38TSf8sl2/7Velw6prdqttqfhVUEVr808W7Z5kW35vm/hr1fw7qngb4oeArfUvDFz9o0y+Tck1u7Bw38TLIrblbr827vXyEo8/un1dGXJ7x/Ld+0R+x74P8MR3M3xOgt9eumZmWDV73fcDd93b+82/7itEq/7VfHP7NOpeDPgvr3iXwpqUCWIsbqG9tY9qpxKm1tq/9sq/pw+MH7RXwN8Aapc/C7w9HFr3i2NXaDw9pbLDHGq/da5m+Tczf3Wb/gP8Vfz6/tefFrwV+0x4yn0Sw8I6VoN1ot01u15p7yvdNtZv3TSbk+X+Lay/LmueUlH3HI9ejTnV96MT9d/gn8VNN8beEbfWNNmEqMu3NfQMWuTRwrfWbYeP5q/nj8I6b8VPAnh9NH8Javc2Ft95Y43YVvf8JZ+0hHlE8U6oo/67v/8AFVh7ax3SyubP6WNP8RaJ8SPCdzompEbpImRwa/PT9sy40341fsg+OPhX4nuoF8Q+HbfcEldQ8z2u2aB13feaVU2/72a/JS40n4u6tIZtb1/UZkk+8JZ3wf8Ax6rVh8PfD2nyedrd8nmt1y2TS+tR+yXTyWS95yP1J8G/FbQfgH+wL4D+FHw317TE8Ya9Z2+nRf6RFiyuL7dNPcT/ADfu1gV5G+b7zAL95q9g8SftAfAf9nn4P6P8EPhF4g0+8+xwLA9xHcI+5tv7x5JN33mbLV+OH/CMeAGh2faY8fWsSTwL4DkkKfaYwK0jWf8AKH9kQ5ubnP01k/ar+EXhrSj/AGl4psri6kXcwikWQ7v+A76+SPGX7ZnhuTXHm0pbm9hZtq+UmP8A0LZXzw3w5+HsMnnfaYz7Zq/Hp/w60uH78bFfel7SQ/7NpL7R+gXwF8dfsSfG7UP7K+PGq6vpW77kV7EsFpL/ALMk8EkrL/wLy/8Aer9g/gv4X/Y/s/Dr6R+zrpPh6H7G7M6WSoX3f3pNy+b8395t3X+Kv5StY+Jfg/QY3S28v5a8f8I/tZax+z/8TofjV8I2gh1OH5Ly3xhLy33K0kEn+9tGxvvK3/AlbSnUj8Jy4rL7+9GR/bJrlp9qk+zaJBFZ/wDPWeNVT5a+Bfix+0Vpcl9cfCX9mlRq3iGHel5rNyWOnWrpt8xNyr++uP8ApnGy9Pmb+FvmnUf2tvHn7VOmeFrDwlbz6J4N8Uacr6lEjPDqO6dHXb5i/wCrjiZot+3/AFiybt235WZdXfhv4I/DM2fgy2SKx02Jn8iLrs/5af8AjvzVr7p5HLJS948T+NNjb6xpqP8AEW5Oq6rDFs3ufkL/AMTKv3Vr84JFhjcpCMIrfLX1/wCL2udR8GzfEW31KPUrG4VxEUb95G3y/wCsX+H71fH1fQ5TG0ZSPnMzlrFBUTN0NPbhaoXEjx969c8w5vxg27wvqeen2WX/ANAavhz91X2v4ul2+F9S/vfZZef+ANXxF58v9+q5TPmif//Q+X6KoxzbeKsiRm5/rWXMLlsTZau28A6wmk+MtJ1Jzj7Pewy/98urVw6ncKsQt5b+YGwy/MppSjdcpVOUlI/eb9pXxd4q8Q+IvCH7Ovgacw2/ia9iuPEM8fX+zYmVpYFb+Hz8eW/+zmvnb9uz47fGnwHpOvaV+zZaaorebFYXEenvFDCFigaRvL+bzVkbcN7Lt+UBa1/2c/iJbfFjxQ3jZ2SK90ewZboOygqvzNuVf4l3NXnl18XLbUvit4j8H36x7t6X8BXq6Spt/wDHWQ/mK+JrRkpyiz7zC1ocsZLU/m6/Z58TfFr9sr43W3if4mayPAvg/Td8s92CqySN92NFVlfczMw+8rd/l3V9Y+HdQ8JaJqlzbeFVMUOmz/6VOeC0r/NJu/vN0/Svz0/a2tW8A/FG5/Z+8MG4sp5temSKSD5H+zyzs21f92Nh+Qr2mD4/+A/ilY6b4JsLYeGNP8J28MF/JArf6VFEu2PczSbvtErA72Vdu0f3q48Rh3zxqwj7u3/BPeweK5HyTd5H6m+H/ixoOrMkcUvm7V3ZPZf9pqzde+OngnTZnS2cSuv3jnpX4d/Fv9rbQ/BLPpHhx5UDLlkg5dl/9BWvlPUP2qvH/jCM6V4Y0vykk+XM8jNn/gK7P/QqqOW1qsbx+E1qZzh6UrOV5H7VfHD9uHwZ4bsZLOS4AMa9Q3SvzTvP2zrXXtaleHWXAZvlG+vK/hz+y94z+MmrJqXxL1XZZs277PFwK++tO/4J0/s8x6aPtiZk2/Md1dEMHhKMbTld+RyvGY/EO8FaJ4TYftIaxebY4dUJX610tr8ZfGF5hLO/D/8AAq62+/4J4/B/5/7D1e70/wDu+XJ8v/fNY1v/AME2/E802/wn46KD+EXCKf8A0HZU+wovaZrGtiYfHC5Wm+J/xO8vekjuPZq4bWPjF8S4m2P5g+pr07WP2Ef2ovDVkbnQ/EumX6R9nDp/8VXy18Uvh/8AtM/De3D+J9MivVZfleylEn/jvyNVRwy5tGgqYySjqmP174veM5k33Mh/OtL9n9vEPxk+NmgfDyaZvs2oXi/bHX+G3X95O/8AwGMO1fGd94z8Q3V8bDUrW4gnVfmjdGB21+kH7D+gzeBdL1L4o68hiu9Wi+x2Abjbb7t00v8AwJlEaf7O/wDvV2/U/Zx5pHiVMz9o9JH9Jmn/ABU0rwJ8RLPxVoWqQW81vZXEVvp2GPmGXbNI391VijhCpXKyfGqG+8Nt/aUof7QjI2enzV+aHgPxZf8AjHWtQ8f2e46TpNvLa2sq8/aLmdPJ2RL95lijd2eT7u7C1saevja6jXTXDRWy/Nvc4rGnhZTekTkqYqKj78j1jy7nRLy50ewvC9lNtZkQ8f3lVqdJtXis6xs/sNukGd23ue9StIv3ya+kwtH2cLHzOIre1nJhJJtVqzXLN60TSe/4VTuJNoby8V2xOb+6c340k/4pnUNjcfZZf/QGr4g8z/br7T8WsW8Nal/16y/+gNXxRUc4mj//0fkepI5NtR0VzmhaW42mpllO3hqz6VTt6UE8p1Wj69qWi3H2zR55LeTG3KFh8tUNQ1/xhb+INM8Z6JciTUtNZ4m+0Hia3l/1kTMv+6GRvasXe1WLdbq4mS2hBd5G2gDu1YVsPCpH34m+HxFWl8Ej5j/aC/Zz0f41eLrT4x77jStc09Zmly/nCdvKbyVVv4drKi/d+7X5ueMvhnqvg3wydYeO4m1G+vJWltZIXUx+VtjjZm+60bLmT/x2v6hdN+DX/EvttKvIt7Rqu/j+P+KtK+/ZZ8Paxbnfb7WZeuK+XqVoqfKvhPsqMp8l5/Ez+LfUvB+sajePcXkLks25i45NdV4b8NtpcyzbCjL7V/Uxov7KPhjxpZ/b7u3ikt5JX8g7FOYtzLG3/AlXd+Nem6D/AME5fhXqQ/0mwj+b0RacsVpyyCnR5Jcx/NV4f+ImveH4F+xuV2r0r0vw7+0p4hhn+zakjNFu+YjtX9If/Dq34UXke+G2RP8AgK18Df8ABQ79hvwT+zx+z7Lrfgyyjm17Xr2HSbDYihw0rbpHVv8AZjBrmjTpTfKd/wDaFamuY+FdH+O1trlwsKZQbu/WvoHQfiF5MIeGXacfiatN+wbdQ+D9L1i2s3t5rqyil3xlshmRW+b+9Xx3468I/FT4Y3z2lzG93bR/dkHUf7y1hLD2l7h6OHzLn+PQ+4Yvjlc2O6G5lBT+Lmvgb9oL4taP4u8Uf2bompR/aI0+TJ4Vv+A14n42+Mk2n6f5NzCJblvlXn/0KuC+Bvw7h+O3jCbRHeez8lPtF5donyQRL955N38P8KfN8zYVa6KdGylOfwnPiMcubkgbXxA0P4nWum6PqWq2EV3b6pvW1vIJMjfEy+Ym75GVvmDfiK9r+CeteKtbS/03xVA8S2u1YjOMOytu+X/a+7Wb4Ls7z4maXpGjaOpTTfDs8z2oidnRpZ9nmStuX7zbU+X2r3618C63ahvtkrn3zXRT5uTln8R4WIlGdWUo/CfRXwf1BLYvoLuFRvnQele8SSbeU618heDbX/hH9QivEHzx/N9f71fVCXAkjV4WzuX5a93Lal4cp87mFO079y/JM1UpG3c7fyqKST5vnqFpNuO1enGNjg9pf3Yg3yq3rWbJvZjvxuqSa4d/v1VZt1TKQoxOe8Uf8izqf/XrL/6A1fF1faPiplXwvqX/AF6y/wDoDV8U+clZLYqW5//S+P45aezlm3VjrvbLp+VTRzbfv1z8tjbmuaSM23tT2f5qqNMg96j+1J6UD5TRr0T4S2V/qPxM0K001QZmvE27hkBVbczbf9lc15etzG3HFfb/AOw/4B/4Sbx7e+Kpl3R6Tb7UJ/vy/Kv/AI6p/OufE1OSlKUjbD0+erFH3PDpL6avnX9kZ0X7z2/Lf9+/vf8AfO6uA+MnxW8H+B/g34j8VaJdxnU7WzdLO2f5JjdS/u4E8tvm3NIwr7DtfDW5en51ZuvAfg+eSO/16zt7l4WV0MqKSG/hZa+PlL3uY+ujsfPfwx+EH9i+EdH8PInyabZw2+W7+Uir/wCy173ZaTpuhqqcFqZq3jCG2zZ6UnHrXPWq395N50zGszWMjuba6mvplhhG1K+JP2sPD+ifEz46eFPh1f4e38O2638q/wDTW6ZlX/gW2I/nX6C+EdH2ss0g+Wvya1r4hReJv2pPHPiG2lEsVjrNppaH/ZtVVW/8ed6qOnvD5ry5T60i8I6Uvh+203yRi1Z4MEf7W5f/AB1hXxz8eP2Y/D3jCxkms4Qk235SBX3Jot5DqTX8KNnyZ0lx/wBdV2/+yVZ1XSvOjPy0o6bDlqfyg/Hj9i5Yb6Z7yzMUqt8s8Q5FfHknwh8YeDYdTMOtXEn2qze18uINHuT+7Jtb5v8AYr+vrxt8OdH1pXjvIUf6ivkvxB+yt4M1TUPtP2ZF3e1dUcRH4ZHPUpv7Mj8rP2R/hTNffDXStYmtljaaJWYBcAH+L/x6vrTVvhPm3+SPmvoG3/Zr+IvhmAaH8N9dttN0pdzLHLbedJGzNuZVbcny7mLfMves2++A/jCCMv4n8R6jfv8AxCMrAn/fMao3/j9RKpeQowsuU+J9c8BppLNI+xNvqa2NJZEsIo9wfbxuB619D3XwZ0S3kLy2SSy/89Jd0j/99NvavH/FmjvoOoiJBhG+7ivVy2p755eZ0f3XMZEs3ls2zj2rMklct1pm9qbXu8x4EY2Co5JNi0SNtWqF1cfLwtSVsYni6T/imdRTd/y6y7v++Gr4o/c/3q+wvFDO3hvUf+vWX/0Fq+OPm9q15TL2p//T+IYrjLb0H3qeG3cZ5qlbfcSpl/1lZldbEisF64ajczfIDUCdakT/AFtBEt7FnemzPev2q/YL8JJo/wAHP7bmT99rF1LPn/YX92v/AKCfzr8Ta/fL9jT/AJIH4e/64y/+jmry80/hHr5VrWPqG6vEtYyE+9XD6rNeXzbMk10eq/eNYaf6+vlZH0xU0/w2+7zJvm+tdnpOgvJMqEU+3+4a67RP+PpamyLt7pqaxeWfgzwrfaxckKLO3eds/wCyu7/2Wv5O/wBn/wCKl5qmieJvGF25ebUNafUWPruuFav6nPjl/wAkw8R/9g2b/wBFtX8fn7Nf/JLdQ/3/AP2qtb017plzM/bT9nn43WHiL4nS+G7k7ftmnOyhj/FEyyf+gq9fdUapqFv5icrX4w/svf8AJwlh/wBeF1/6Ikr9nvD3/IONY1VqbU37pw2v6S6/cFeRarZ+T0FfQmuV4frlOJmczZ6otnJl2/OukWHStaj2PjdXnF99+uw8O/66lbUDlPEHgO2bLwgV8Q/tCeC/7L02LVUGPLfa1fpLq3+pavib9p//AJFGT/rtXbgn+9icmMV6Mj8/A26mNIqUR96rXHSvqj5Yr3Fw+793WZK25jvq2/WqM336uKMp72Ob8XTf8U1qOz5v9Hl/9Aavi3zn/u/5/OvsrxN/yLOo/wDXvL/6A1fG1E9yD//Z" alt="Victoria Wilson" style="width:110px;height:110px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid rgba(2,195,154,0.4);margin:0 auto 1.5rem;display:block;"/>
+      <h3>Victoria Wilson</h3>
+      <p class="subtitle">VA · Cold Caller · Appointment Setter</p>
+      <div class="contact-item">📞 09044852938</div>
+      <div class="contact-item">🌍 Remote Available Worldwide</div>
+      <div class="contact-item">⏰ Full-time · Part-time · Freelance</div>
+      <div class="contact-item">✉️ Wilsoifeoma51@gmail.com</div>
+    </div>
+    <div class="about-bio">
+      <p>I'm a <strong>Virtual Assistant specializing in cold calling and appointment setting</strong>, helping busy business owners and sales teams stop chasing leads and start closing them.</p>
+      <p>I'm reliable, results-driven, and comfortable handling <strong>high call volumes</strong> while keeping a professional and persuasive tone. Every "no" is just one call closer to a "yes". My mindset stays strong throughout.</p>
+      <p>Whether you're a solopreneur who needs an extra hand or a growing team looking to scale outreach. I'm here to help <strong>fill your calendar and grow your business</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">My <em>Skills</em></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">📞</div>
+      <h3>Cold Calling</h3>
+      <ul>
+        <li>Breaking through gatekeepers</li>
+        <li>High-volume outbound calls</li>
+        <li>Persuasive & professional tone</li>
+        <li>Objection handling</li>
+        <li>Script development & delivery</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📅</div>
+      <h3>Appointment Setting</h3>
+      <ul>
+        <li>Booking qualified appointments</li>
+        <li>Calendar management</li>
+        <li>Follow-up systems</li>
+        <li>Lead qualification</li>
+        <li>Pipeline & CRM management</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💼</div>
+      <h3>Virtual Assistance</h3>
+      <ul>
+        <li>Administrative support</li>
+        <li>Email & inbox management</li>
+        <li>Data entry & reporting</li>
+        <li>Outbound sales coordination</li>
+        <li>MS Office / Google Workspace</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+
+<section id="experience">
+  <div class="reveal">
+    <p class="section-label">Track Record</p>
+    <h2 class="section-title">Work <em>Experience</em></h2>
+  </div>
+  <div class="exp-list">
+    <div class="exp-card reveal">
+      <div class="exp-left">
+        <h3>Cold Caller & Appointment Setter</h3>
+        <p class="company">Freelance / Remote · Ongoing</p>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Booked 14+ qualified appointments in a single week for real estate clients</li>
+          <li>Cold called prospects and broke through gatekeepers with persuasive scripting</li>
+          <li>Maintained consistent booking rates with no ads or funnels. Pure outbound results.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-left">
+        <h3>Virtual Assistant</h3>
+        <p class="company">Freelance / Remote · Ongoing</p>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Managed follow-ups ensuring no lead fell through the cracks</li>
+          <li>Handled CRM updates, email management, and administrative coordination</li>
+          <li>Supported solopreneurs and growing sales teams with day-to-day operations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-left">
+        <h3>Lead Generation Specialist</h3>
+        <p class="company">Freelance / Remote · Ongoing</p>
+      </div>
+      <div class="exp-right">
+        <ul>
+          <li>Prospected and qualified leads for sales teams across multiple industries</li>
+          <li>Developed outreach scripts with proven conversion improvements</li>
+          <li>Managed pipeline tracking and daily reporting for clients</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+
+<section id="why">
+  <div class="reveal">
+    <p class="section-label">Differentiators</p>
+    <h2 class="section-title">Why Work <em>With Me?</em></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🔁</div>
+      <div>
+        <h3>Reset After Every Call</h3>
+        <p>Each call is a fresh start. My mindset stays strong even at high call volumes. Prospects feel the energy and confidence.</p>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🎯</div>
+      <div>
+        <h3>Lead with Their Problem</h3>
+        <p>I don't pitch I listen first. Understanding the prospect's pain drives real conversations that convert into booked meetings.</p>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">💬</div>
+      <div>
+        <h3>Handle Objections Head-On</h3>
+        <p>I don't avoid tough responses. I'm trained to turn objections into opportunities and keep the conversation alive.</p>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📋</div>
+      <div>
+        <h3>Always Have a Follow-Up Plan</h3>
+        <p>No lead goes cold. Every call ends with a clear next step: booked, followed up, or nurtured until ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="contact-tagline">Your calendar isn't full yet. Let me fix that.</h2>
+    <p class="contact-sub">Available for full-time, part-time, and freelance opportunities, remote worldwide.</p>
+  </div>
+  <div class="contact-cards reveal">
+    <div class="contact-card">
+      <div class="c-icon">📞</div>
+      <div class="c-label">Phone / WhatsApp</div>
+      <div class="c-value">09044852938</div>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">✉️</div>
+      <div class="c-label">Email</div>
+      <div class="c-value">Wilsoifeoma51@gmail.com</div>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">📅</div>
+      <div class="c-label">What I Offer</div>
+      <div class="c-value">Cold Calls, Appointments, VA</div>
+    </div>
+    <div class="contact-card">
+      <div class="c-icon">🌍</div>
+      <div class="c-label">Availability</div>
+      <div class="c-value">Remote, Full-time, Freelance</div>
+    </div>
+  </div>
+  <a class="cta-btn reveal" href="tel:09044852938">📞 Call Victoria Now</a>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <p>© 2026 Victoria Wilson · Virtual Assistant & Cold Calling Specialist · All Rights Reserved</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
